@@ -3,17 +3,12 @@ import '../scss/styles.scss';
 const userBoardElement = document.getElementById('user-board');
 const pcBoardElement = document.getElementById('pc-board');
 const bingoBoardElement = document.getElementById('bingo-board');
-const buttonElement = document.getElementById('button');
+const buttonStartElement = document.getElementById('button-start');
+const buttonRestartElement = document.getElementById('button-restart');
 const gameTextElement = document.getElementById('game-text');
-const userNumbers = [];
-const pcNumbers = [];
-let numbersToPlay = [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
-  23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
-  42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
-  61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79,
-  80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99
-];
+let numbersToPlay = Array(99)
+  .fill()
+  .map((_, index) => index + 1);
 let winner = false;
 let timeoutId;
 
@@ -43,14 +38,35 @@ const fillBoard = board => {
   board.append(fragment);
 };
 
+const restartGame = () => {
+  numbersToPlay = Array(99)
+    .fill()
+    .map((_, index) => index + 1);
+  winner = false;
+  timeoutId = undefined;
+  [...bingoBoardElement.children].forEach(element =>
+    element.classList.remove('number-appeared')
+  );
+  [...userBoardElement.children].forEach(element =>
+    element.classList.remove('number-user-correct')
+  );
+
+  [...pcBoardElement.children].forEach(element =>
+    element.classList.remove('number-pc-correct')
+  );
+  extractNumberEvery2Seconds();
+};
+
 const checkWin = () => {
   const userChecks = document.querySelectorAll('.number-user-correct');
   const pcChecks = document.querySelectorAll('.number-pc-correct');
   if (userChecks.length === 15) {
     winner = true;
+    buttonRestartElement.classList.remove('hide');
     console.log('GANASTE');
   } else if (pcChecks.length === 15) {
     winner = true;
+    buttonRestartElement.classList.remove('hide');
     console.log('PERDISTE');
   }
 };
@@ -85,6 +101,7 @@ const extractNumberEvery2Seconds = () => {
         number.classList.add('number-pc-correct');
     });
 
+    buttonStartElement.classList.add('hide');
     checkWin();
 
     timeoutId = setTimeout(extractNumberEvery2Seconds, 200);
@@ -93,4 +110,7 @@ const extractNumberEvery2Seconds = () => {
 
 fillBoard(userBoardElement);
 fillBoard(pcBoardElement);
-buttonElement.addEventListener('click', extractNumberEvery2Seconds);
+buttonRestartElement.classList.add('hide');
+gameTextElement.classList.add('hide');
+buttonStartElement.addEventListener('click', extractNumberEvery2Seconds);
+buttonRestartElement.addEventListener('click', restartGame);
