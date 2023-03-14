@@ -54,6 +54,7 @@ const restartGame = () => {
   [...pcBoardElement.children].forEach(element =>
     element.classList.remove('number-pc-correct')
   );
+  buttonRestartElement.classList.add('hide');
   extractNumberEvery2Seconds();
 };
 
