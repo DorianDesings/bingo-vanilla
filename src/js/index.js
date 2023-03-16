@@ -85,6 +85,7 @@ const extractRandomNumber = () => {
 
 const extractNumberEvery2Seconds = () => {
   clearTimeout(timeoutId);
+  gameTextElement.classList.remove('hide');
   if (numbersToPlay.length > 0 && !winner) {
     const newRandomNumber = extractRandomNumber();
     gameTextElement.textContent = `Número: ${newRandomNumber}`;
