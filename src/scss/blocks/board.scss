@@ -3,9 +3,10 @@
   justify-content: space-around;
 }
 .board {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(5, 100px);
-  grid-template-rows: repeat(5, 100px);
+  grid-template-rows: repeat(3, 100px);
   padding: 1rem;
 }
 
@@ -56,4 +57,12 @@
 
 .hide {
   display: none;
+}
+
+.result-text {
+  position: absolute;
+  bottom: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3rem;
 }

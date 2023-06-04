@@ -2,7 +2,9 @@ import {
   buttonRestartElement,
   buttonStartElement,
   pcBoardElement,
-  userBoardElement
+  pcTextElement,
+  userBoardElement,
+  userTextElement
 } from './elements';
 
 const gameTextElement = document.getElementById('game-text');
@@ -25,10 +27,13 @@ const checkWin = () => {
   if (userChecks.length === 15) {
     winner = true;
     buttonRestartElement.classList.remove('hide');
-    console.log('GANASTE');
+    userTextElement.textContent = 'USER WIN';
+    pcTextElement.textContent = 'PC LOSE';
   } else if (pcChecks.length === 15) {
     winner = true;
     buttonRestartElement.classList.remove('hide');
+    userTextElement.textContent = 'USER LOSE';
+    pcTextElement.textContent = 'PC WIN';
     console.log('PERDISTE');
   }
 };
